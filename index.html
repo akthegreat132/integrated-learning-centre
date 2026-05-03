@@ -118,6 +118,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lucide@0.407.0/dist/umd/lucide.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <style>
     :root {
@@ -675,6 +677,9 @@
       background: none;
       border: none;
       padding: 8px;
+      position: relative;
+      z-index: 2001;
+      cursor: pointer;
     }
 
     .mobile-menu-btn span {
@@ -682,7 +687,7 @@
       height: 2px;
       background: var(--text);
       border-radius: 2px;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .mobile-menu-btn.active span:nth-child(1) {
@@ -695,6 +700,15 @@
 
     .mobile-menu-btn.active span:nth-child(3) {
       transform: rotate(-45deg) translate(8px, -8px);
+    }
+
+    @media (max-width: 768px) {
+      .heading {
+        font-size: clamp(32px, 8vw, 42px) !important;
+      }
+      .section {
+        padding: 60px 0 !important;
+      }
     }
 
     .hero {
@@ -1445,11 +1459,19 @@
 
     .approach-card {
       display: flex;
-      gap: 18px;
-      align-items: center;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: all 0.3s ease;
+      flex-direction: column;
+      gap: 20px;
+      align-items: flex-start;
+      background: white;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      height: 100%;
+    }
+
+    .approach-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-premium);
+      border-color: var(--navy);
     }
 
     .approach-card:hover {
@@ -1677,11 +1699,29 @@
     }
     .mobile-sticky-cta {
       position: fixed;
-      top: 12px;
-      right: 12px;
-      z-index: 110;
-      display: none;
-      animation: fadeIn 0.5s ease forwards;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 12px 24px;
+      border-radius: 100px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .mobile-sticky-cta.show {
+      transform: translateX(-50%) translateY(0);
+      visibility: visible;
+      opacity: 1;
     }
 
     @keyframes fadeIn {
@@ -2619,6 +2659,83 @@
       }
     }
 
+    /* Swiper Custom Styling */
+    .swiper {
+      width: 100%;
+      padding: 40px 20px 80px !important;
+      margin: 0 -20px;
+    }
+
+    .swiper-slide {
+      height: auto !important;
+      display: flex;
+      justify-content: center;
+    }
+
+    .swiper-pagination-bullet {
+      background: var(--navy) !important;
+      opacity: 0.2;
+    }
+
+    .swiper-pagination-bullet-active {
+      opacity: 1;
+      background: var(--gold) !important;
+      width: 24px !important;
+      border-radius: 4px !important;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: var(--navy) !important;
+      background: white;
+      width: 50px !important;
+      height: 50px !important;
+      border-radius: 50%;
+      box-shadow: var(--shadow-premium);
+      transition: all 0.3s ease;
+    }
+
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+      font-size: 20px !important;
+      font-weight: 800;
+    }
+
+    .swiper-button-next:hover,
+    .swiper-button-prev:hover {
+      background: var(--navy);
+      color: white !important;
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      .swiper-button-next,
+      .swiper-button-prev {
+        display: none !important;
+      }
+      
+      .swiper {
+        padding-bottom: 60px !important;
+      }
+    }
+
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 24px !important;
+      }
+      .section-title {
+        font-size: 32px !important;
+        margin-bottom: 32px !important;
+      }
+      .kicker {
+        font-size: 10px !important;
+        margin-bottom: 8px !important;
+      }
+      .programs-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
 
     /* Premium Mobile Menu */
     .mobile-nav {
@@ -2627,7 +2744,7 @@
       background: rgba(227, 227, 227, 0.98) !important;
       backdrop-filter: blur(30px);
       -webkit-backdrop-filter: blur(30px);
-      z-index: 1500 !important;
+      z-index: 2000 !important;
       display: flex !important;
       flex-direction: column !important;
       align-items: center;
@@ -2712,8 +2829,9 @@
 
 <body>
   <!-- Mobile Sticky CTA -->
-  <div class="mobile-sticky-cta">
-    <a href="#contact" class="btn btn-primary" style="padding: 10px 20px; font-size: 13px;">Join Now</a>
+  <div class="mobile-sticky-cta" id="mobileStickyCta">
+    <div style="color:white; font-size:12px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase;">Limited Batch Slots</div>
+    <a href="#contact" class="btn btn-primary" style="padding: 10px 24px; font-size: 14px; background:var(--gold); border:none; color:white; border-radius:50px;">Enroll Now</a>
   </div>
 
   <div class="custom-cursor hide-mobile"></div>
@@ -2922,7 +3040,7 @@
             <div class="kicker">The Institute</div>
             <h2 class="section-title heading">Why Choose Our <span style="color:var(--navy);">Academic Institute</span></h2>
           </div>
-          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:32px;">
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:32px;">
             <div class="approach-card neu reveal" style="padding:40px; border-radius:var(--radius-lg);">
               <div class="icon-shell neu-inset" style="margin-bottom:24px;"><i data-lucide="brain-circuit" style="width:26px;height:26px;color:var(--navy);"></i></div>
               <h3 style="font-size:24px; margin-bottom:16px;">Concept-Based Learning</h3>
@@ -2956,112 +3074,72 @@
             <p style="max-width:700px; margin:0 auto; opacity:0.7;">High-end academic coaching for competitive exams and school curriculums.</p>
           </div>
 
-          <div class="programs-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap:32px;">
+          <div class="programs-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:32px;">
             
-            <!-- ICSE Chemistry -->
-            <div class="neu reveal" style="padding:40px; border-radius:var(--radius-xl);">
-              <div style="font-size:12px; font-weight:800; color:var(--navy); margin-bottom:12px; letter-spacing:0.1em;">ICSE FOUNDATION</div>
-              <h3 style="font-size:28px; margin-bottom:16px;">Best ICSE Chemistry Classes</h3>
-              <p class="body-copy" style="margin-bottom:24px;">Build a rock-solid foundation for Class 10th boards with results-focused conceptual clarity.</p>
+            <!-- JEE -->
+            <div class="neu reveal" style="padding:40px; border-radius:var(--radius-xl); border-top: 5px solid var(--navy);">
+              <div style="font-size:12px; font-weight:800; color:var(--navy); margin-bottom:12px; letter-spacing:0.1em;">JEE (MAINS & ADVANCED)</div>
+              <h3 style="font-size:28px; margin-bottom:16px;">IIT-JEE Excellence</h3>
+              <p class="body-copy" style="margin-bottom:24px;">Elite Physics, Chemistry & Maths coaching designed to convert effort into top AIR ranks.</p>
               <ul style="list-style:none; padding:0; margin-bottom:32px; display:grid; gap:12px;">
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Concept-First Approach</li>
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Board-Specific Question Bank</li>
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Weekly Performance Tests</li>
+                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--navy);"></i> Advanced Problem Solving</li>
+                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--navy);"></i> All India Test Series</li>
+                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--navy);"></i> Personal Mentor Support</li>
               </ul>
-              <a href="#contact" class="btn btn-primary" style="width:100%;">Enroll Now</a>
+              <a href="#contact" class="btn btn-primary" style="width:100%;">Enroll For JEE</a>
             </div>
 
-            <!-- ISC Chemistry -->
-            <div class="neu reveal" style="padding:40px; border-radius:var(--radius-xl);">
-              <div style="font-size:12px; font-weight:800; color:var(--navy); margin-bottom:12px; letter-spacing:0.1em;">ISC SENIOR SECONDARY</div>
-              <h3 style="font-size:28px; margin-bottom:16px;">Best ISC Chemistry Classes</h3>
-              <p class="body-copy" style="margin-bottom:24px;">Advanced ISC coaching for Class 11th & 12th focused on high-scoring theory and numerical mastery.</p>
+            <!-- CBSE XI-XII -->
+            <div class="neu reveal" style="padding:40px; border-radius:var(--radius-xl); border-top: 5px solid var(--blue);">
+              <div style="font-size:12px; font-weight:800; color:var(--blue); margin-bottom:12px; letter-spacing:0.1em;">CBSE XI-XII</div>
+              <h3 style="font-size:28px; margin-bottom:16px;">CBSE Board Topper</h3>
+              <p class="body-copy" style="margin-bottom:24px;">Structured curriculum support for Class 11th & 12th CBSE students aiming for 95%+ in boards.</p>
               <ul style="list-style:none; padding:0; margin-bottom:32px; display:grid; gap:12px;">
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Comprehensive Theory Notes</li>
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Exam-Success Strategies</li>
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Dedicated Doubt Sessions</li>
+                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--blue);"></i> NCERT Mastery</li>
+                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--blue);"></i> Previous Year Papers</li>
+                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--blue);"></i> Regular Mock Exams</li>
               </ul>
-              <a href="#contact" class="btn btn-primary" style="width:100%;">Contact Us</a>
+              <a href="#contact" class="btn btn-primary" style="width:100%; background:var(--blue); border-color:var(--blue);">Join CBSE Batch</a>
             </div>
 
-            <!-- CBSE PCM -->
-            <div class="neu reveal" style="padding:40px; border-radius:var(--radius-xl);">
-              <div style="font-size:12px; font-weight:800; color:var(--navy); margin-bottom:12px; letter-spacing:0.1em;">CBSE BOARDS</div>
-              <h3 style="font-size:28px; margin-bottom:16px;">Best CBSE PCM Classes</h3>
-              <p class="body-copy" style="margin-bottom:24px;">Achieve 95%+ in boards with our integrated PCM coaching for Class 11th & 12th.</p>
+            <!-- ISC -->
+            <div class="neu reveal" style="padding:40px; border-radius:var(--radius-xl); border-top: 5px solid var(--gold);">
+              <div style="font-size:12px; font-weight:800; color:var(--gold); margin-bottom:12px; letter-spacing:0.1em;">ISC SENIOR SECONDARY</div>
+              <h3 style="font-size:28px; margin-bottom:16px;">ISC Specialization</h3>
+              <p class="body-copy" style="margin-bottom:24px;">Dedicated batches for ISC students focusing on the specific depth required for the curriculum.</p>
               <ul style="list-style:none; padding:0; margin-bottom:32px; display:grid; gap:12px;">
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> NCERT Mastery</li>
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Regular Board Simulations</li>
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Expert PCM Mentorship</li>
+                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Conceptual Numerical Focus</li>
+                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Comprehensive Theory</li>
+                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> ISC Sample Papers</li>
               </ul>
-              <a href="#contact" class="btn btn-primary" style="width:100%;">Get Details</a>
+              <a href="#contact" class="btn btn-primary" style="width:100%; background:var(--gold); border-color:var(--gold);">Explore ISC</a>
             </div>
 
-            <!-- IB Classes -->
-            <div class="neu reveal" style="padding:40px; border-radius:var(--radius-xl);">
-              <div style="font-size:12px; font-weight:800; color:var(--navy); margin-bottom:12px; letter-spacing:0.1em;">GLOBAL CURRICULUM</div>
-              <h3 style="font-size:28px; margin-bottom:16px;">Best IB Classes (Chemistry + PCM)</h3>
-              <p class="body-copy" style="margin-bottom:24px;">Specialized IB DP coaching (HL/SL) for Physics, Chemistry, and Mathematics.</p>
+            <!-- ICSE FOUNDATION -->
+            <div class="neu reveal" style="padding:40px; border-radius:var(--radius-xl); border-top: 5px solid var(--green);">
+              <div style="font-size:12px; font-weight:800; color:var(--green); margin-bottom:12px; letter-spacing:0.1em;">ICSE FOUNDATION</div>
+              <h3 style="font-size:28px; margin-bottom:16px;">ICSE Concept Base</h3>
+              <p class="body-copy" style="margin-bottom:24px;">Building strong logic from class 9th & 10th to ensure future competitive success.</p>
               <ul style="list-style:none; padding:0; margin-bottom:32px; display:grid; gap:12px;">
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> IA & EE Support</li>
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Past Paper Analysis</li>
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Global Pedagogy Standards</li>
+                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--green);"></i> Foundation Mastery</li>
+                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--green);"></i> Logic Building</li>
+                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--green);"></i> Integrated Testing</li>
               </ul>
-              <a href="#contact" class="btn btn-primary" style="width:100%;">Contact Us</a>
+              <a href="#contact" class="btn btn-primary" style="width:100%; background:var(--green); border-color:var(--green);">Start Early</a>
             </div>
 
-            <!-- JEE Chemistry Mastery -->
-            <div class="neu reveal" style="padding:40px; border-radius:var(--radius-xl);">
-              <div style="font-size:12px; font-weight:800; color:var(--navy); margin-bottom:12px; letter-spacing:0.1em;">JEE SPECIAL</div>
-              <h3 style="font-size:28px; margin-bottom:16px;">JEE Main & Advanced Chemistry</h3>
-              <p class="body-copy" style="margin-bottom:24px;">Elite Chemistry coaching focusing on advanced problem-solving for top IIT ranks.</p>
+            <!-- IB -->
+            <div class="neu reveal" style="padding:40px; border-radius:var(--radius-xl); border-top: 5px solid #6366f1;">
+              <div style="font-size:12px; font-weight:800; color:#6366f1; margin-bottom:12px; letter-spacing:0.1em;">IB GLOBAL CURRICULUM</div>
+              <h3 style="font-size:28px; margin-bottom:16px;">IB Physics & Maths</h3>
+              <p class="body-copy" style="margin-bottom:24px;">Specialized support for IB DP Physics and Maths AA/AI with emphasis on IA and EE.</p>
               <ul style="list-style:none; padding:0; margin-bottom:32px; display:grid; gap:12px;">
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Logical Reaction Mechanisms</li>
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Advanced Organic Mastery</li>
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Rank-Booster Problem Sets</li>
+                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:#6366f1;"></i> IA & EE Guidance</li>
+                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:#6366f1;"></i> Past Paper Drills</li>
+                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:#6366f1;"></i> Global Standards</li>
               </ul>
-              <a href="#contact" class="btn btn-primary" style="width:100%;">Enroll Now</a>
+              <a href="#contact" class="btn btn-primary" style="width:100%; background:#6366f1; border-color:#6366f1;">IB Coaching</a>
             </div>
-
-            <!-- JEE Physics Mastery -->
-            <div class="neu reveal" style="padding:40px; border-radius:var(--radius-xl);">
-              <div style="font-size:12px; font-weight:800; color:var(--navy); margin-bottom:12px; letter-spacing:0.1em;">JEE SPECIAL</div>
-              <h3 style="font-size:28px; margin-bottom:16px;">JEE Main & Advanced Physics</h3>
-              <p class="body-copy" style="margin-bottom:24px;">Visual Physics coaching designed to conquer the toughest conceptual problems in JEE.</p>
-              <ul style="list-style:none; padding:0; margin-bottom:32px; display:grid; gap:12px;">
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Calculus-Based Intuition</li>
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Advanced Numerical Drills</li>
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Exam-Day Strategy Coaching</li>
-              </ul>
-              <a href="#contact" class="btn btn-primary" style="width:100%;">Enroll Now</a>
-            </div>
-
-            <!-- General Chemistry -->
-            <div class="neu reveal" style="padding:40px; border-radius:var(--radius-xl);">
-              <div style="font-size:12px; font-weight:800; color:var(--navy); margin-bottom:12px; letter-spacing:0.1em;">GENERAL CHEMISTRY</div>
-              <h3 style="font-size:28px; margin-bottom:16px;">Best Chemistry Classes</h3>
-              <p class="body-copy" style="margin-bottom:24px;">Fundamental to advanced Chemistry support for students seeking academic excellence in science.</p>
-              <ul style="list-style:none; padding:0; margin-bottom:32px; display:grid; gap:12px;">
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Conceptual Clarity Drills</li>
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> One-on-One Doubt Solving</li>
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Structured Study Modules</li>
-              </ul>
-              <a href="#contact" class="btn btn-primary" style="width:100%;">Contact Us</a>
-            </div>
-
-            <!-- JEE Preparation Programs -->
-            <div class="neu reveal" style="padding:40px; border-radius:var(--radius-xl);">
-              <div style="font-size:12px; font-weight:800; color:var(--navy); margin-bottom:12px; letter-spacing:0.1em;">JEE PROGRAMS</div>
-              <h3 style="font-size:28px; margin-bottom:16px;">Complete JEE Preparation Programs</h3>
-              <p class="body-copy" style="margin-bottom:24px;">Integrated long-term programs for 2-year and 1-year JEE intensive preparation cycles.</p>
-              <ul style="list-style:none; padding:0; margin-bottom:32px; display:grid; gap:12px;">
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> PCM Integrated Batch</li>
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Regular Mock Simulations</li>
-                <li style="display:flex; align-items:center; gap:10px;"><i data-lucide="check-circle-2" style="width:18px; color:var(--gold);"></i> Personalized Rank Tracking</li>
-              </ul>
-              <a href="#contact" class="btn btn-primary" style="width:100%;">Enroll Now</a>
-            </div>
-
           </div>
         </div>
       </section>
@@ -3115,159 +3193,63 @@
             <p style="max-width:800px; margin:0 auto; opacity:0.7;">The Integrated Learning Centre is a high-end academic institute dedicated to engineering student success through conceptual mastery. Our veteran faculty brings elite ed-tech experience to a personalized physical learning environment.</p>
           </div>
 
-          <div class="faculty-grid horizontal-scroll-mobile">
-            <div class="faculty-card neu reveal"
-              style="max-width:500px; padding:48px; display: flex; flex-direction: column; justify-content: space-between; flex: 1;">
-              <div class="faculty-card-content">
-                <div style="position:relative;">
-                  <div class="avatar-wrap neu-inset"
-                    style="width:200px; height:200px; margin-bottom:32px; border: 4px solid rgba(109, 40, 217, 0.1);">
-                    <img class="avatar" src="sanjay.png" alt="Mr. Sanjay Sir - Founder & Chemistry Head" loading="lazy">
+          <div class="swiper faculty-swiper">
+            <div class="swiper-wrapper">
+              <!-- Sanjay Sir -->
+              <div class="swiper-slide">
+                <div class="faculty-card neu reveal" style="padding:48px; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                  <div class="faculty-card-content">
+                    <div style="position:relative; width: fit-content; margin: 0 auto;">
+                      <div class="avatar-wrap neu-inset" style="width:200px; height:200px; margin-bottom:32px; border: 4px solid rgba(109, 40, 217, 0.1);">
+                        <img class="avatar" src="sanjay.png" alt="Mr. Sanjay Sir - Founder & Chemistry Head" loading="lazy">
+                      </div>
+                      <div style="position:absolute; bottom:20px; right:0; background:var(--navy); color:white; padding:6px 14px; border-radius:20px; font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; box-shadow:0 8px 16px rgba(109,40,217,0.3);">Founder</div>
+                    </div>
+                    <h3 style="font-size:32px; margin-bottom:8px;">Mr. Sanjay Sir</h3>
+                    <div class="faculty-role" style="font-size:16px; font-weight:800; letter-spacing:0.15em; margin-bottom:24px;">CHIEF MENTOR | CHEMISTRY HEAD</div>
+                    <p class="body-copy" style="font-size:16px; line-height:1.8; color:#4b5563;">With over 18+ years of dedicated Chemistry teaching experience, Mr. Sanjay has pioneered a structured conceptual approach that has converted hundreds of students into top rankers at IITs and Medical Colleges nationwide.</p>
                   </div>
-                  <div
-                    style="position:absolute; bottom:20px; right:0; background:var(--navy); color:white; padding:6px 14px; border-radius:20px; font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; box-shadow:0 8px 16px rgba(109,40,217,0.3);">
-                    Founder</div>
                 </div>
-
-                <h3 style="font-size:32px; margin-bottom:8px;">Mr. Sanjay Sir</h3>
-                <div class="faculty-role"
-                  style="font-size:16px; font-weight:800; letter-spacing:0.15em; margin-bottom:24px;">CHIEF MENTOR | CHEMISTRY HEAD</div>
-
-                <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin-bottom:24px;">
-                  <span
-                    style="background:rgba(109,40,217,0.05); color:var(--navy); padding:6px 12px; border-radius:8px; font-size:12px; font-weight:700;">JEE
-                    Specialist</span>
-                  <span
-                    style="background:rgba(246,173,85,0.1); color:var(--gold); padding:6px 12px; border-radius:8px; font-size:12px; font-weight:700;">NEET
-                    Expert</span>
-                  <span
-                    style="background:rgba(72,187,120,0.1); color:var(--green); padding:6px 12px; border-radius:8px; font-size:12px; font-weight:700;">Board
-                    Topper Maker</span>
-                </div>
-
-                <p class="body-copy" style="font-size:16px; line-height:1.8; color:#4b5563; max-width:400px;">With over
-                  <strong>18+ years</strong> of dedicated Chemistry teaching experience, Mr. Sanjay has
-                  pioneered a structured conceptual approach that has converted hundreds of students into top rankers at
-                  IITs and Medical Colleges nationwide. Also he's taught at vmc for many years.</p>
               </div>
 
-              <div
-                style="margin-top:32px; padding-top:24px; border-top:1px solid rgba(0,0,0,0.05); width:100%; display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-                <div style="text-align:left;">
-                  <div
-                    style="font-size:10px; color:#94a3b8; font-weight:800; text-transform:uppercase; letter-spacing:0.1em;">
-                    Subject Expertise</div>
-                  <div style="font-size:20px; font-weight:900; color:var(--navy);">Chemistry</div>
+              <!-- Rajesh Yadav -->
+              <div class="swiper-slide">
+                <div class="faculty-card neu reveal" style="padding:48px; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                  <div class="faculty-card-content">
+                    <div style="position:relative; width: fit-content; margin: 0 auto;">
+                      <div class="avatar-wrap neu-inset" style="width:200px; height:200px; margin-bottom:32px; border: 4px solid rgba(109, 40, 217, 0.1);">
+                        <img class="avatar" src="rajesh.png" alt="Er. Rajesh Yadav - Senior Physics Faculty" loading="lazy">
+                      </div>
+                      <div style="position:absolute; bottom:10px; right:-10px; background:var(--blue); color:white; padding:8px 16px; border-radius:30px; font-size:12px; font-weight:900; letter-spacing:0.1em; text-transform:uppercase; box-shadow:0 10px 20px rgba(37,99,235,0.4); z-index: 10; border: 2px solid white;">Senior Mentor</div>
+                    </div>
+                    <h3 style="font-size:32px; margin-bottom:8px;">Er. Rajesh Yadav</h3>
+                    <div class="faculty-role" style="font-size:16px; font-weight:800; letter-spacing:0.15em; margin-bottom:24px;">SENIOR PHYSICS FACULTY | B. TECH IIT BHU</div>
+                    <p class="body-copy" style="font-size:16px; line-height:1.8; color:#4b5563;">An alumnus of IIT BHU with over 20 years of experience, Er. Rajesh Yadav is renowned for simplifying complex physics derivations and making the subject intuitive for competitive exam aspirants.</p>
+                  </div>
                 </div>
-                <div style="text-align:right;">
-                  <div
-                    style="font-size:10px; color:#94a3b8; font-weight:800; text-transform:uppercase; letter-spacing:0.1em;">
-                    Core Focus</div>
-                  <div style="font-size:20px; font-weight:900; color:var(--gold);">JEE & NEET</div>
+              </div>
+
+              <!-- Tabish Sir -->
+              <div class="swiper-slide">
+                <div class="faculty-card neu reveal" style="padding:48px; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                  <div class="faculty-card-content">
+                    <div style="position:relative; width: fit-content; margin: 0 auto;">
+                      <div class="avatar-wrap neu-inset" style="width:200px; height:200px; margin-bottom:32px; border: 4px solid rgba(109, 40, 217, 0.1);">
+                        <img class="avatar" src="tabish.png" alt="Tabish sir - Physics Faculty" loading="lazy">
+                      </div>
+                      <div style="position:absolute; bottom:20px; right:0; background:var(--gold); color:white; padding:6px 14px; border-radius:20px; font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; box-shadow:0 8px 16px rgba(249,115,22,0.3);">Senior Mentor</div>
+                    </div>
+                    <h3 style="font-size:32px; margin-bottom:8px;">Tabish sir</h3>
+                    <div class="faculty-role" style="font-size:16px; font-weight:800; letter-spacing:0.15em; margin-bottom:24px;">PHYSICS FACULTY | EX FACULTY AAKASH</div>
+                    <p class="body-copy" style="font-size:16px; line-height:1.8; color:#4b5563;">With over 15+ years of dedicated Physics teaching experience, Tabish sir is an Ex faculty at Aakash Institute. He brings immense expertise in guiding and mentoring students for highly competitive exams.</p>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="faculty-card neu reveal"
-              style="max-width:500px; padding:48px; display: flex; flex-direction: column; justify-content: space-between; flex: 1;">
-              <div class="faculty-card-content">
-                <div style="position:relative;">
-                  <div class="avatar-wrap neu-inset"
-                    style="width:200px; height:200px; margin-bottom:32px; border: 4px solid rgba(109, 40, 217, 0.1);">
-                    <img class="avatar" src="rajesh.png" alt="Er. Rajesh Yadav - Senior Physics Faculty in Gurgaon" loading="lazy">
-                  </div>
-                  <div
-                    style="position:absolute; bottom:20px; right:0; background:var(--blue); color:white; padding:6px 14px; border-radius:20px; font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; box-shadow:0 8px 16px rgba(37,99,235,0.3);">
-                    Senior Mentor</div>
-                </div>
-
-                <h3 style="font-size:32px; margin-bottom:8px;">Er. Rajesh Yadav</h3>
-                <div class="faculty-role"
-                  style="font-size:16px; font-weight:800; letter-spacing:0.15em; margin-bottom:24px;">SENIOR PHYSICS
-                  FACULTY | B. TECH IIT BHU</div>
-
-                <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin-bottom:24px;">
-                  <span
-                    style="background:rgba(37,99,235,0.05); color:var(--blue); padding:6px 12px; border-radius:8px; font-size:12px; font-weight:700;">IIT
-                    BHU Alumnus</span>
-                  <span
-                    style="background:rgba(109,40,217,0.1); color:var(--navy); padding:6px 12px; border-radius:8px; font-size:12px; font-weight:700;">Physics
-                    Expert</span>
-                  <span
-                    style="background:rgba(72,187,120,0.1); color:var(--green); padding:6px 12px; border-radius:8px; font-size:12px; font-weight:700;">20+
-                    Yrs Exp</span>
-                </div>
-
-                <p class="body-copy" style="font-size:16px; line-height:1.8; color:#4b5563; max-width:400px;">An alumnus
-                  of <strong>IIT BHU</strong> with over <strong>20 years</strong> of experience, Er. Rajesh Yadav is
-                  renowned for simplifying complex physics derivations and making the subject intuitive for competitive
-                  exam aspirants.
-
-                </p>
-              </div>
-
-              <div
-                style="margin-top:32px; padding-top:24px; border-top:1px solid rgba(0,0,0,0.05); width:100%; display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-                <div style="text-align:left;">
-                  <div
-                    style="font-size:10px; color:#94a3b8; font-weight:800; text-transform:uppercase; letter-spacing:0.1em;">
-                    Subject Expertise</div>
-                  <div style="font-size:20px; font-weight:900; color:var(--blue);">Physics</div>
-                </div>
-                <div style="text-align:right;">
-                  <div
-                    style="font-size:10px; color:#94a3b8; font-weight:800; text-transform:uppercase; letter-spacing:0.1em;">
-                    Core Focus</div>
-                  <div style="font-size:20px; font-weight:900; color:var(--gold);">JEE & NEET</div>
-                </div>
-              </div>
-            </div>
-            <div class="faculty-card neu reveal"
-              style="max-width:500px; padding:48px; display: flex; flex-direction: column; justify-content: space-between; flex: 1;">
-              <div class="faculty-card-content">
-                <div style="position:relative;">
-                  <div class="avatar-wrap neu-inset"
-                    style="width:200px; height:200px; margin-bottom:32px; border: 4px solid rgba(109, 40, 217, 0.1);">
-                    <img class="avatar" src="tabish.png" alt="Tabish sir - Physics Faculty" loading="lazy">
-                  </div>
-                  <div
-                    style="position:absolute; bottom:20px; right:0; background:var(--gold); color:white; padding:6px 14px; border-radius:20px; font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; box-shadow:0 8px 16px rgba(249,115,22,0.3);">
-                    Senior Mentor</div>
-                </div>
-
-                <h3 style="font-size:32px; margin-bottom:8px;">Tabish sir</h3>
-                <div class="faculty-role"
-                  style="font-size:16px; font-weight:800; letter-spacing:0.15em; margin-bottom:24px;">PHYSICS FACULTY | EX FACULTY AAKASH</div>
-
-                <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin-bottom:24px;">
-                  <span
-                    style="background:rgba(249,115,22,0.05); color:var(--gold); padding:6px 12px; border-radius:8px; font-size:12px; font-weight:700;">Ex Aakash</span>
-                  <span
-                    style="background:rgba(109,40,217,0.1); color:var(--navy); padding:6px 12px; border-radius:8px; font-size:12px; font-weight:700;">Physics Expert</span>
-                  <span
-                    style="background:rgba(72,187,120,0.1); color:var(--green); padding:6px 12px; border-radius:8px; font-size:12px; font-weight:700;">15+ Yrs Exp</span>
-                </div>
-
-                <p class="body-copy" style="font-size:16px; line-height:1.8; color:#4b5563; max-width:400px;">With over <strong>15+ years</strong> of dedicated Physics teaching experience, Tabish sir is an Ex faculty at Aakash Institute. He brings immense expertise in guiding and mentoring students for highly competitive exams like JEE and NEET.</p>
-              </div>
-
-              <div
-                style="margin-top:32px; padding-top:24px; border-top:1px solid rgba(0,0,0,0.05); width:100%; display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-                <div style="text-align:left;">
-                  <div
-                    style="font-size:10px; color:#94a3b8; font-weight:800; text-transform:uppercase; letter-spacing:0.1em;">
-                    Subject Expertise</div>
-                  <div style="font-size:20px; font-weight:900; color:var(--blue);">Physics</div>
-                </div>
-                <div style="text-align:right;">
-                  <div
-                    style="font-size:10px; color:#94a3b8; font-weight:800; text-transform:uppercase; letter-spacing:0.1em;">
-                    Core Focus</div>
-                  <div style="font-size:20px; font-weight:900; color:var(--gold);">JEE & NEET</div>
-                </div>
-              </div>
-            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
           </div>
-        </div>
       </section>
 
       <section id="hall-of-fame" class="section" style="background: rgba(212, 175, 55, 0.02);">
@@ -3278,96 +3260,89 @@
             <p class="section-copy" style="margin:0 auto;">Our legacy is built on the success of students who mastered the logic of Physics, Chemistry & Maths to reach top universities.</p>
           </div>
 
-          <div class="topper-grid horizontal-scroll-mobile" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-            <!-- Saksham 1 -->
-            <div class="topper-card neu reveal">
-              <div class="avatar-wrap neu-inset" style="margin-bottom:24px; position:relative;">
-                <img class="avatar" src="saksham1.png" alt="Saksham Topper IIT Madras" loading="lazy">
-                <div
-                  style="position:absolute; top:-10px; right:-10px; background:var(--navy); color:white; padding:4px 10px; border-radius:12px; font-size:10px; font-weight:900;">
-                  IIT MADRAS</div>
+          <div class="swiper topper-swiper">
+            <div class="swiper-wrapper">
+              <!-- Saksham 1 -->
+              <div class="swiper-slide">
+                <div class="topper-card neu reveal">
+                  <div class="avatar-wrap neu-inset" style="margin-bottom:24px; position:relative;">
+                    <img class="avatar" src="saksham1.png" alt="Saksham Topper IIT Madras" loading="lazy">
+                    <div style="position:absolute; top:-10px; right:-10px; background:var(--navy); color:white; padding:4px 10px; border-radius:12px; font-size:10px; font-weight:900;">IIT MADRAS</div>
+                  </div>
+                  <h3 style="font-size:24px;margin-bottom:8px;">Saksham</h3>
+                  <div style="color:var(--navy);font-weight:800;margin-bottom:8px; letter-spacing:0.1em;">98% | DPS RKP</div>
+                  <p class="body-copy">"The conceptual depth taught at Integrated Learning Centre is what makes the difference in JEE Advanced."</p>
+                </div>
               </div>
-              <h3 style="font-size:24px;margin-bottom:8px;">Saksham</h3>
-              <div style="color:var(--navy);font-weight:800;margin-bottom:8px; letter-spacing:0.1em;">98% | DPS RKP
-              </div>
-              <p class="body-copy">"The conceptual depth taught at Integrated Learning Centre is what makes the
-                difference in JEE Advanced."</p>
-            </div>
 
-            <!-- Manya -->
-            <div class="topper-card neu reveal">
-              <div class="avatar-wrap neu-inset" style="margin-bottom:24px; position:relative;">
-                <img class="avatar" src="manya.png" alt="Manya Topper IIT Delhi" loading="lazy">
-                <div
-                  style="position:absolute; top:-10px; right:-10px; background:var(--navy); color:white; padding:4px 10px; border-radius:12px; font-size:10px; font-weight:900;">
-                  IIT DELHI (CS)</div>
+              <!-- Manya -->
+              <div class="swiper-slide">
+                <div class="topper-card neu reveal">
+                  <div class="avatar-wrap neu-inset" style="margin-bottom:24px; position:relative;">
+                    <img class="avatar" src="manya.png" alt="Manya Topper IIT Delhi" loading="lazy">
+                    <div style="position:absolute; top:-10px; right:-10px; background:var(--navy); color:white; padding:4px 10px; border-radius:12px; font-size:10px; font-weight:900;">IIT DELHI (CS)</div>
+                  </div>
+                  <h3 style="font-size:24px;margin-bottom:8px;">Manya</h3>
+                  <div style="color:var(--navy);font-weight:800;margin-bottom:8px; letter-spacing:0.1em;">99% | DPS RKP</div>
+                  <p class="body-copy">"The best place for Physics, Chemistry & Maths in Gurgaon. Concepts were made so clear."</p>
+                </div>
               </div>
-              <h3 style="font-size:24px;margin-bottom:8px;">Manya</h3>
-              <div style="color:var(--navy);font-weight:800;margin-bottom:8px; letter-spacing:0.1em;">99% | DPS RKP
-              </div>
-              <p class="body-copy">"The best place for Physics, Chemistry & Maths in Gurgaon. Concepts were made so clear that
-                they became second nature."</p>
-            </div>
 
-            <!-- Saksham 2 -->
-            <div class="topper-card neu reveal">
-              <div class="avatar-wrap neu-inset" style="margin-bottom:24px; position:relative;">
-                <img class="avatar" src="saksham2.png" alt="Saksham Topper MAMC" loading="lazy">
-                <div
-                  style="position:absolute; top:-10px; right:-10px; background:var(--gold); color:white; padding:4px 10px; border-radius:12px; font-size:10px; font-weight:900;">
-                  MAMC DELHI</div>
+              <!-- Saksham 2 -->
+              <div class="swiper-slide">
+                <div class="topper-card neu reveal">
+                  <div class="avatar-wrap neu-inset" style="margin-bottom:24px; position:relative;">
+                    <img class="avatar" src="saksham2.png" alt="Saksham Topper MAMC" loading="lazy">
+                    <div style="position:absolute; top:-10px; right:-10px; background:var(--gold); color:white; padding:4px 10px; border-radius:12px; font-size:10px; font-weight:900;">MAMC DELHI</div>
+                  </div>
+                  <h3 style="font-size:24px;margin-bottom:8px;">Saksham</h3>
+                  <div style="color:var(--navy);font-weight:800;margin-bottom:8px; letter-spacing:0.1em;">97.6% | DPS RKP</div>
+                  <p class="body-copy">"Achieving a seat at MAMC requires precision in Physics, Chemistry & Maths, and that's exactly what Sanjay Sir provides."</p>
+                </div>
               </div>
-              <h3 style="font-size:24px;margin-bottom:8px;">Saksham</h3>
-              <div style="color:var(--navy);font-weight:800;margin-bottom:8px; letter-spacing:0.1em;">97.6% | DPS RKP
-              </div>
-              <p class="body-copy">"Achieving a seat at MAMC requires precision in Physics, Chemistry & Maths, and that's
-                exactly what Sanjay Sir provides."</p>
-            </div>
 
-            <!-- Arvin -->
-            <div class="topper-card neu reveal">
-              <div class="avatar-wrap neu-inset" style="margin-bottom:24px; position:relative;">
-                <img class="avatar" src="arvinmadhok.png.jpeg" alt="Arvin Topper NIT" loading="lazy">
-                <div
-                  style="position:absolute; top:-10px; right:-10px; background:var(--blue); color:white; padding:4px 10px; border-radius:12px; font-size:10px; font-weight:900;">
-                  NIT KKR (CS)</div>
+              <!-- Arvin -->
+              <div class="swiper-slide">
+                <div class="topper-card neu reveal">
+                  <div class="avatar-wrap neu-inset" style="margin-bottom:24px; position:relative;">
+                    <img class="avatar" src="arvinmadhok.png.jpeg" alt="Arvin Topper NIT" loading="lazy">
+                    <div style="position:absolute; top:-10px; right:-10px; background:var(--blue); color:white; padding:4px 10px; border-radius:12px; font-size:10px; font-weight:900;">NIT KKR (CS)</div>
+                  </div>
+                  <h3 style="font-size:24px;margin-bottom:8px;">Arvin Madhok</h3>
+                  <div style="color:var(--navy);font-weight:800;margin-bottom:8px; letter-spacing:0.1em;">98.7% | DPS GURGAON</div>
+                  <p class="body-copy">"The doubt resolution here is elite. I never left a class with a single confusion remaining."</p>
+                </div>
               </div>
-              <h3 style="font-size:24px;margin-bottom:8px;">Arvin Madhok</h3>
-              <div style="color:var(--navy);font-weight:800;margin-bottom:8px; letter-spacing:0.1em;">98.7% | DPS
-                GURGAON</div>
-              <p class="body-copy">"The doubt resolution here is elite. I never left a class with a single confusion
-                remaining."</p>
-            </div>
 
-            <!-- Mridul -->
-            <div class="topper-card neu reveal">
-              <div class="avatar-wrap neu-inset" style="margin-bottom:24px; position:relative;">
-                <img class="avatar" src="mridul.png" alt="Mridul Topper BITS" loading="lazy">
-                <div
-                  style="position:absolute; top:-10px; right:-10px; background:var(--blue); color:white; padding:4px 10px; border-radius:12px; font-size:10px; font-weight:900;">
-                  BITS PILANI</div>
+              <!-- Mridul -->
+              <div class="swiper-slide">
+                <div class="topper-card neu reveal">
+                  <div class="avatar-wrap neu-inset" style="margin-bottom:24px; position:relative;">
+                    <img class="avatar" src="mridul.png" alt="Mridul Topper BITS" loading="lazy">
+                    <div style="position:absolute; top:-10px; right:-10px; background:var(--blue); color:white; padding:4px 10px; border-radius:12px; font-size:10px; font-weight:900;">BITS PILANI</div>
+                  </div>
+                  <h3 style="font-size:24px;margin-bottom:8px;">Mridul</h3>
+                  <div style="color:var(--navy);font-weight:800;margin-bottom:8px; letter-spacing:0.1em;">96% | LOTUS VALLEY</div>
+                  <p class="body-copy">"Logical-first teaching style helped me master complex Physics concepts and Organic Chemistry."</p>
+                </div>
               </div>
-              <h3 style="font-size:24px;margin-bottom:8px;">Mridul</h3>
-              <div style="color:var(--navy);font-weight:800;margin-bottom:8px; letter-spacing:0.1em;">96% | LOTUS
-                VALLEY</div>
-              <p class="body-copy">"Logical-first teaching style helped me master complex Physics concepts and Organic
-                Chemistry with absolute ease."</p>
-            </div>
 
-            <!-- Rabani -->
-            <div class="topper-card neu reveal">
-              <div class="avatar-wrap neu-inset" style="margin-bottom:24px; position:relative;">
-                <img class="avatar" src="rabani.png" alt="Rabani Topper Board" style="object-position: center 15%;" loading="lazy">
-                <div
-                  style="position:absolute; top:-10px; right:-10px; background:var(--green); color:white; padding:4px 10px; border-radius:12px; font-size:10px; font-weight:900;">
-                  BOARD TOPPER</div>
+              <!-- Rabani -->
+              <div class="swiper-slide">
+                <div class="topper-card neu reveal">
+                  <div class="avatar-wrap neu-inset" style="margin-bottom:24px; position:relative;">
+                    <img class="avatar" src="rabani.png" alt="Rabani Topper Board" style="object-position: center 15%;" loading="lazy">
+                    <div style="position:absolute; top:-10px; right:-10px; background:var(--green); color:white; padding:4px 10px; border-radius:12px; font-size:10px; font-weight:900;">BOARD TOPPER</div>
+                  </div>
+                  <h3 style="font-size:24px;margin-bottom:8px;">Rabani Marwah</h3>
+                  <div style="color:var(--navy);font-weight:800;margin-bottom:8px; letter-spacing:0.1em;">100 MATHS | 99 SCIENCE</div>
+                  <p class="body-copy">"A conceptual foundation in class 10th is vital, and there is no better place than this."</p>
+                </div>
               </div>
-              <h3 style="font-size:24px;margin-bottom:8px;">Rabani Marwah</h3>
-              <div style="color:var(--navy);font-weight:800;margin-bottom:8px; letter-spacing:0.1em;">100 MATHS | 99
-                SCIENCE</div>
-              <p class="body-copy">"A conceptual foundation in class 10th is vital, and there is no better place than
-                this for serious students."</p>
             </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
           </div>
         </div>
       </section>
@@ -3452,51 +3427,78 @@
             <h2 class="section-title heading">Awards & Achievements</h2>
           </div>
 
-          <div class="awards-grid horizontal-scroll-mobile">
-            <div class="award-card reveal">
-              <img src="award1.png" alt="Excellence Award" loading="lazy">
-              <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
+          <div class="swiper award-swiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <div class="award-card reveal">
+                  <img src="award1.png" alt="Excellence Award" loading="lazy">
+                  <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="award-card reveal">
+                  <img src="award2.png" alt="Physics Recognition" loading="lazy">
+                  <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="award-card reveal">
+                  <img src="award3.png" alt="Chemistry Mastery" loading="lazy">
+                  <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="award-card reveal">
+                  <img src="award4.png" alt="Academic Distinction" loading="lazy" style="object-position: top;">
+                  <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="award-card reveal">
+                  <img src="award5.png" alt="Innovation in Teaching" loading="lazy" style="object-position: top;">
+                  <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="award-card reveal">
+                  <img src="award6.png" alt="Subject Expert Award" loading="lazy">
+                  <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="award-card reveal">
+                  <img src="award7.png" alt="Best Faculty" loading="lazy">
+                  <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="award-card reveal">
+                  <img src="award8.png" alt="Institutional Achievement" loading="lazy">
+                  <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="award-card reveal">
+                  <img src="award9.png" alt="Global Educator Recognition" loading="lazy">
+                  <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="award-card reveal">
+                  <img src="award10.png" alt="Outstanding Result Award" loading="lazy">
+                  <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="award-card reveal">
+                  <img src="award11.png.jpeg" alt="Recent Achievement" loading="lazy">
+                  <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
+                </div>
+              </div>
             </div>
-            <div class="award-card reveal" style="transition-delay: 0.1s;">
-              <img src="award2.png" alt="Physics Recognition" loading="lazy">
-              <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
-            </div>
-            <div class="award-card reveal" style="transition-delay: 0.2s;">
-              <img src="award3.png" alt="Chemistry Mastery" loading="lazy">
-              <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
-            </div>
-            <div class="award-card reveal" style="transition-delay: 0.3s;">
-              <img src="award4.png" alt="Academic Distinction" loading="lazy" style="object-position: top;">
-              <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
-            </div>
-            <div class="award-card reveal" style="transition-delay: 0.4s;">
-              <img src="award5.png" alt="Innovation in Teaching" loading="lazy" style="object-position: top;">
-              <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
-            </div>
-            <div class="award-card reveal" style="transition-delay: 0.1s;">
-              <img src="award6.png" alt="Subject Expert Award" loading="lazy">
-              <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
-            </div>
-            <div class="award-card reveal" style="transition-delay: 0.2s;">
-              <img src="award7.png" alt="Best Faculty" loading="lazy">
-              <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
-            </div>
-            <div class="award-card reveal" style="transition-delay: 0.3s;">
-              <img src="award8.png" alt="Institutional Achievement" loading="lazy">
-              <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
-            </div>
-            <div class="award-card reveal" style="transition-delay: 0.4s;">
-              <img src="award9.png" alt="Global Educator Recognition" loading="lazy">
-              <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
-            </div>
-            <div class="award-card reveal" style="transition-delay: 0.1s;">
-              <img src="award10.png" alt="Outstanding Result Award" loading="lazy">
-              <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
-            </div>
-            <div class="award-card reveal" style="transition-delay: 0.2s;">
-              <img src="award11.png.jpeg" alt="Recent Achievement" loading="lazy">
-              <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
-            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
           </div>
         </div>
       </section>
@@ -3754,8 +3756,7 @@
 
         mobileNavLinks.forEach((link) => {
           link.addEventListener('click', () => {
-            mobileMenuBtn.classList.remove('active');
-            mobileMenu.style.display = 'none';
+            closeMenu();
           });
         });
 
@@ -3785,7 +3786,46 @@
 
 
 
-        // Enhanced progress tracker animation
+        // Swiper Initializations
+        const swiperOptions = {
+          slidesPerView: 1,
+          spaceBetween: 20,
+          loop: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+          breakpoints: {
+            640: {
+              slidesPerView: 1,
+              spaceBetween: 20,
+            },
+            768: {
+              slidesPerView: 2,
+              spaceBetween: 30,
+            },
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 40,
+            },
+          }
+        };
+
+        new Swiper('.faculty-swiper', swiperOptions);
+        new Swiper('.topper-swiper', swiperOptions);
+        new Swiper('.award-swiper', {
+          ...swiperOptions,
+          breakpoints: {
+            640: { slidesPerView: 1 },
+            768: { slidesPerView: 3 },
+            1024: { slidesPerView: 4 }
+          }
+        });
+
         function animateProgressTracker() {
           const progressBars = document.querySelectorAll('.mini-value');
           progressBars.forEach((bar, index) => {
@@ -4141,12 +4181,12 @@
         }
 
         // Mobile Sticky CTA toggle
-      const stickyCta = document.querySelector('.mobile-sticky-cta');
-      if (window.pageYOffset > 800) {
-        stickyCta.classList.add('show');
-      } else {
-        stickyCta.classList.remove('show');
-      }
+        const stickyCta = document.getElementById('mobileStickyCta');
+        if (window.pageYOffset > 400 && window.innerWidth < 860) {
+          stickyCta.classList.add('show');
+        } else {
+          stickyCta.classList.remove('show');
+        }
 
       // Navbar change on scroll
         const nav = document.querySelector('.navbar-wrap');
