@@ -1670,6 +1670,25 @@
     .faq-item:nth-child(2n) {
       border-left-color: var(--orange);
     }
+    .mobile-sticky-cta {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 110;
+      display: none;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .mobile-sticky-cta.show {
+        display: block;
+      }
+    }
 
     .faq-item:nth-child(3n) {
       border-left-color: var(--blue);
@@ -2007,7 +2026,7 @@
       }
 
       .section {
-        padding: 48px 0;
+        padding: 40px 0;
       }
 
       .hero {
@@ -2027,8 +2046,14 @@
       }
 
       .hero-title {
-        font-size: clamp(32px, 9vw, 48px) !important;
-        line-height: 1.1;
+        font-size: clamp(32px, 10vw, 56px) !important;
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+      }
+
+      .hero-badge {
+        padding: 8px 14px;
+        font-size: 10px;
       }
 
       .section-title {
@@ -2098,6 +2123,39 @@
 
       .hero-actions .btn,
       .btn {
+        width: 100% !important;
+        justify-content: center !important;
+      }
+
+      /* Horizontal scroll for cards to reduce vertical height */
+      .horizontal-scroll-mobile {
+        display: flex !important;
+        overflow-x: auto !important;
+        scroll-snap-type: x mandatory !important;
+        gap: 16px !important;
+        padding: 20px 0 !important;
+        width: 100vw !important;
+        margin-left: -20px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+
+      .horizontal-scroll-mobile::-webkit-scrollbar {
+        display: none;
+      }
+
+      .horizontal-scroll-mobile > * {
+        flex: 0 0 85% !important;
+        scroll-snap-align: center !important;
+      }
+
+      .faculty-grid, .topper-grid, .awards-grid {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+      }
+    }
         width: 100%;
         min-width: unset;
         justify-content: center;
@@ -2648,6 +2706,11 @@
 </head>
 
 <body>
+  <!-- Mobile Sticky CTA -->
+  <div class="mobile-sticky-cta">
+    <a href="#contact" class="btn btn-primary" style="padding: 10px 20px; font-size: 13px;">Join Now</a>
+  </div>
+
   <div class="custom-cursor hide-mobile"></div>
   <div class="cursor-follower hide-mobile"></div>
   <div id="scrollProgress"></div>
@@ -3107,7 +3170,7 @@
               teach, diagnose, and mentor at the same time.</p>
           </div>
 
-          <div class="faculty-grid">
+          <div class="faculty-grid horizontal-scroll-mobile">
             <div class="faculty-card neu reveal"
               style="max-width:500px; padding:48px; display: flex; flex-direction: column; justify-content: space-between; flex: 1;">
               <div class="faculty-card-content">
@@ -3271,7 +3334,7 @@
               Chemistry and achieved their dreams.</p>
           </div>
 
-          <div class="topper-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+          <div class="topper-grid horizontal-scroll-mobile" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
             <!-- Saksham 1 -->
             <div class="topper-card neu reveal">
               <div class="avatar-wrap neu-inset" style="margin-bottom:24px; position:relative;">
@@ -3445,7 +3508,7 @@
             <h2 class="section-title heading">Awards & Achievements</h2>
           </div>
 
-          <div class="awards-grid">
+          <div class="awards-grid horizontal-scroll-mobile">
             <div class="award-card reveal">
               <img src="award1.png" alt="Excellence Award" loading="lazy">
               <div class="award-badge"><i data-lucide="award" style="width:18px;height:18px;"></i></div>
@@ -4139,7 +4202,15 @@
           btt.classList.remove('show');
         }
 
-        // Navbar change on scroll
+        // Mobile Sticky CTA toggle
+      const stickyCta = document.querySelector('.mobile-sticky-cta');
+      if (window.pageYOffset > 800) {
+        stickyCta.classList.add('show');
+      } else {
+        stickyCta.classList.remove('show');
+      }
+
+      // Navbar change on scroll
         const nav = document.querySelector('.navbar-wrap');
         if (window.pageYOffset > 50) {
           nav.classList.add('scrolled');
