@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://theintegratedlearningcentre.com/sitemap.xml
