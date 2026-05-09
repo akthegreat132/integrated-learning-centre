@@ -3964,7 +3964,14 @@
           }
         };
 
-        new Swiper('.faculty-swiper', swiperOptions);
+        new Swiper('.faculty-swiper', {
+          ...swiperOptions,
+          autoplay: {
+            delay: 7000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }
+        });
         new Swiper('.topper-swiper', swiperOptions);
         new Swiper('.award-swiper', {
           ...swiperOptions,
