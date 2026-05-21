@@ -2777,8 +2777,8 @@
     }
 
     .mobile-nav.active {
-      opacity: 1;
-      visibility: visible;
+      opacity: 1 !important;
+      visibility: visible !important;
     }
 
     .mobile-nav-link {
@@ -2915,15 +2915,6 @@
             <span></span>
           </button>
         </div>
-
-        <!-- Mobile Menu -->
-        <nav id="mobileMenu" class="mobile-nav">
-          <a href="#approach" class="mobile-nav-link" onclick="closeMenu()">Approach</a>
-          <a href="#curriculum" class="mobile-nav-link" onclick="closeMenu()">Curriculum</a>
-          <a href="#faculty" class="mobile-nav-link" onclick="closeMenu()">Faculty</a>
-          <a href="#gallery" class="mobile-nav-link" onclick="closeMenu()">Gallery</a>
-          <a href="#contact" class="mobile-nav-link" onclick="closeMenu()">Contact</a>
-        </nav>
       </div>
     </header>
 
@@ -3819,10 +3810,50 @@
       Book Demo
     </a>
 
+    <!-- Mobile Menu -->
+    <nav id="mobileMenu" class="mobile-nav">
+      <a href="#approach" class="mobile-nav-link" onclick="closeMenu()">Approach</a>
+      <a href="#curriculum" class="mobile-nav-link" onclick="closeMenu()">Curriculum</a>
+      <a href="#faculty" class="mobile-nav-link" onclick="closeMenu()">Faculty</a>
+      <a href="#gallery" class="mobile-nav-link" onclick="closeMenu()">Gallery</a>
+      <a href="#contact" class="mobile-nav-link" onclick="closeMenu()">Contact</a>
+    </nav>
 
     <script>
-        gsap.registerPlugin(ScrollTrigger);
-        lucide.createIcons();
+        // Mobile menu functionality - Defined first to prevent other script errors from breaking it
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        if (mobileMenuBtn && mobileMenu) {
+          mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+          });
+        }
+
+        function closeMenu() {
+          if (mobileMenuBtn) mobileMenuBtn.classList.remove('active');
+          if (mobileMenu) mobileMenu.classList.remove('active');
+          document.body.style.overflow = 'auto';
+        }
+
+        if (mobileNavLinks) {
+          mobileNavLinks.forEach((link) => {
+            link.addEventListener('click', () => {
+              closeMenu();
+            });
+          });
+        }
+
+        try {
+          gsap.registerPlugin(ScrollTrigger);
+        } catch(e) { console.warn("GSAP ScrollTrigger error", e); }
+        
+        try {
+          lucide.createIcons();
+        } catch(e) { console.warn("Lucide error", e); }
 
         const quotes = [
           { text: 'The first place where Physics, Chemistry & Maths actually started making sense.', name: 'Manya', role: 'IIT Delhi (CS)' },
@@ -3890,28 +3921,7 @@
           document.getElementById("scrollProgress").style.width = scrolled + "%";
         });
 
-        // Mobile menu functionality
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-
-        mobileMenuBtn.addEventListener('click', () => {
-          mobileMenuBtn.classList.toggle('active');
-          mobileMenu.classList.toggle('active');
-          document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
-        });
-
-        function closeMenu() {
-          mobileMenuBtn.classList.remove('active');
-          mobileMenu.classList.remove('active');
-          document.body.style.overflow = 'auto';
-        }
-
-        mobileNavLinks.forEach((link) => {
-          link.addEventListener('click', () => {
-            closeMenu();
-          });
-        });
+        // Scroll progress bar
 
         // Navbar scroll effects
         const navbarWrap = document.querySelector('.navbar-wrap');
